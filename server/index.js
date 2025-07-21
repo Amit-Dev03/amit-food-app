@@ -17,12 +17,8 @@ const PORT = process.env.PORT || 4000;
 
 // --- MIDDLEWARE ---
 // Enable Cross-Origin Resource Sharing for all routes
-app.use(
-  cors({
-    origin: "https://quick-bites-three.vercel.app/",
-    credentials: true,
-  })
-);
+app.use(cors());
+
 
 // Add JSON parsing middleware
 app.use(express.json());
