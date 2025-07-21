@@ -8,7 +8,8 @@ import { RiEBike2Fill } from "react-icons/ri";
 import "./RestaurantMenu.css";
 import { SWIGGY_MENU_FOOD_IMAGE_URL } from "../../utils/constant";
 
-const LOCAL_MENU_URL = "http://localhost:4000/restaurant/";
+// For deployment, change the URL accordingly
+const LOCAL_MENU_URL = "https://quickbite-4ojx.onrender.com/restaurant/";
 
 const RestaurantMenu = () => {
   const [resInfo, setResInfo] = useState(null);
