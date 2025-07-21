@@ -11,7 +11,7 @@ const Body = () => {
   const [filteredRes, setFilteredList] = useState([]);
   const [searchText, setSearchText] = useState("");
 
-  const LOCAL_API_URL = "https://quickbite-4ojx.onrender.com";
+  const LOCAL_API_URL = "https://quickbite-4ojx.onrender.com/restaurants";
 
   useEffect(() => {
     fetchData();
