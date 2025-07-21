@@ -1,0 +1,75 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid;
+  background: #fff;
+}
+.logo-container {
+  margin: 1rem;
+}
+.navbar h2 {
+  font-family: "Great Vibes", cursive;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 24px !important;
+}
+.navbar img {
+  width: 8rem;
+  border-radius: 50%;
+  padding: 1rem;
+}
+.navbar img:hover {
+  cursor: pointer;
+  box-shadow: 1px 1px rgb(145, 141, 141) inset, -1em 0 0.4em rgb(245, 245, 191);
+}
+.navbar ul {
+  display: flex;
+  list-style-type: none;
+  margin-right: 1rem;
+}
+.navbar ul li {
+  padding: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: rgb(252, 114, 142);
+  /**making tilt up effect**/
+  perspective: 1200px;
+  transition: transform 0.3s ease-out;
+  transform-origin: center bottom;
+  margin-right: 0.3rem;
+  /**removing Link Component (a-tag) default css*/
+  text-decoration: none; /* removes underline */
+  display: inline-block; /* makes hover transforms work */
+}
+
+.navbar ul li:hover {
+  border-bottom: 1px solid;
+  padding-bottom: 2px;
+  cursor: pointer;
+  font-weight: 500;
+  color: crimson;
+  text-decoration: none;
+  /**tilt up effect**/
+  display: inline-block;
+  transform: rotateX(-15deg);
+  box-shadow: 0px 1px 3px rgb(40, 34, 34, 0.1);
+}
+.login-btn {
+  outline: none;
+  border-radius: 0.6rem;
+  margin-right: 1rem;
+  margin-top: 4px;
+  padding: 15px;
+  font-size: 1.5rem;
+  border: none;
+  color: rgb(252, 114, 142);
+  background: #fff;
+}
+.login-btn:hover {
+  font-size: 24px;
+  border-color: black;
+  color: crimson;
+  font-weight: 500;
+  border-bottom: 1px solid;
+}
