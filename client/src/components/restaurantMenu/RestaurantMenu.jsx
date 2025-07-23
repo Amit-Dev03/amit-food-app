@@ -1,35 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useRestaurantMenu from "../../utils/useRestaurantMenu";
 import Shimmer from "../shimmer/Shimmer";
 import green from "../../assets/green.png";
 import red from "../../assets/red.png";
 import { useParams } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoFastFoodOutline } from "react-icons/io5";
 import { RiEBike2Fill } from "react-icons/ri";
-import "./RestaurantMenu.css";
 import { SWIGGY_MENU_FOOD_IMAGE_URL } from "../../utils/constant";
+import { BUTTON_CLASSES } from "../../utils/constant";
 
 // For deployment, change the URL accordingly
-const LOCAL_MENU_URL = "https://quickbite-4ojx.onrender.com/restaurant/";
 
 const RestaurantMenu = () => {
-  const [resInfo, setResInfo] = useState(null);
-  const { resId } = useParams();
-
   //adding Accordion functionality
   const [openSection, setOpenSection] = useState([]);
-  const fetchMenu = async () => {
-    try {
-      const res = await fetch(LOCAL_MENU_URL + resId);
-      const json = await res.json();
-      setResInfo(json.data);
-    } catch {
-      console.log("Failed to fetch menu!");
-    }
-  };
+  const { resId } = useParams();
+  const resInfo = useRestaurantMenu(resId);
 
-  useEffect(() => {
-    fetchMenu();
-  }, [resId]);
   //toggle functionality for Accordion
   const toggleSection = (index) => {
     //if element is already in array it means toggle is open hence close it
@@ -58,41 +46,47 @@ const RestaurantMenu = () => {
 
   const { minDeliveryTime, maxDeliveryTime } = sla ?? "--";
   return (
-    <div className="restaurant-details">
+    <div className="menu flex items-center justify-center flex-col gap-2">
       {/* restaurant details */}
-      <div className="res-text">
-        <h2>{name}</h2>
-        <h3>
-          ⭐{avgRating} ({totalRatingsString}) • {costForTwoMessage}
-        </h3>
-        <h4>{cuisines.join(", ")}</h4>
-        <p>
-          <RiEBike2Fill />
-          {" " + minDeliveryTime}-{maxDeliveryTime} mins
-        </p>
-        <span></span>
-      </div>
+
+      <h1 className="font-bold text-2xl">{name}</h1>
+      <h3>
+        ⭐{avgRating} ({totalRatingsString})
+      </h3>
+      <h4>
+        😋{cuisines.join(", ")} • {costForTwoMessage}
+      </h4>
+      <p>
+        <RiEBike2Fill />
+        {" " + minDeliveryTime}-{maxDeliveryTime} mins
+      </p>
 
       {/*********menu-details**********/}
+      <h2 className="font-semibold flex gap-1">
+        <IoFastFoodOutline /> Menu
+      </h2>
       {typeCard.map((type, index) => (
         <div
           key={type.card.card.title}
-          className="menu-container"
+          className="w-[500px] mr-[3rem]"
         >
-          <button onClick={() => toggleSection(index)}>
-            <p className="text">{type.card.card.title}</p>
-            <p className="sign">
+          <button
+            className=" w-[700px] flex item-center justify-between p-3 rounded-lg bg-blue-600 text-white font-semibold rounded-lg shadow-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-indigo-500 transition duration-400 ease-in-out"
+            onClick={() => toggleSection(index)}
+          >
+            {type.card.card.title}
+            <span className="ml-5">
               {openSection.includes(index) ? (
                 <IoIosArrowDown />
               ) : (
                 <IoIosArrowUp />
               )}
-            </p>
+            </span>
           </button>
           {openSection.includes(index) &&
             type.card.card.itemCards.map((card) => (
               <div
-                className="menu"
+                className="menu "
                 key={card.card.info.id}
               >
                 <div className="menu-text">
@@ -114,8 +108,11 @@ const RestaurantMenu = () => {
                 <img
                   src={SWIGGY_MENU_FOOD_IMAGE_URL + card.card.info.imageId}
                   alt="Food menu pic"
-                  className="food"
+                  loading="lazy"
+                  className="w-32 rounded-xl mb-2"
                 />
+
+                <span className="block w-[700px] h-px bg-gray-300"></span>
               </div>
             ))}
         </div>

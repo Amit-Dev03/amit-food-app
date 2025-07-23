@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import RestaurantCard from "../restaurantCard/RestaurantCard";
 import Shimmer from "../shimmer/Shimmer";
-import "./Body.css";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import { BUTTON_CLASSES } from "../../utils/constant";
+import OfflinePage from "../status/OfflinePage";
+import useOnlineStatus from "../../utils/useOnlineStatus";
 
 const Body = () => {
   const [restaurantList, setrestaurantList] = useState([]);
@@ -58,30 +60,40 @@ const Body = () => {
     setFilteredList(filteredBySearchRes);
     toast("Showing searched results!");
   };
+  const onlineStatus = useOnlineStatus();
+  if (onlineStatus === false)
+    //here you can show game or something to engage user even in offline conditions
+    return <OfflineIndicator />;
 
   return restaurantList.length === 0 ? (
     <Shimmer />
   ) : (
-    <div className="body-container">
-      <div className="filter-container">
-        <button
-          className="filter-btn"
-          onClick={filteredListHandler}
-        >
-          Filter
-        </button>
+    <div className="body m-2">
+      <div className="m-2 flex items-center justify-evenly">
         <div className="search-container">
           <input
             type="text"
             placeholder="Search Restaurants"
             value={searchText}
+            className="border-2 mr-2 p-2 round-lg hover:bg-gray-50 w-64"
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <button onClick={searchHandler}>Search</button>
+          <button
+            className={BUTTON_CLASSES}
+            onClick={searchHandler}
+          >
+            Search
+          </button>
         </div>
+        <button
+          className={BUTTON_CLASSES}
+          onClick={filteredListHandler}
+        >
+          Top Rated Restaurants ✅
+        </button>
       </div>
 
-      <div className="res-container">
+      <div className="res-container grid grid-cols-5 p-4 ml-14">
         {filteredRes.map((res, idx) => (
           <Link
             to={`/restaurant/${res.info.id}`}
